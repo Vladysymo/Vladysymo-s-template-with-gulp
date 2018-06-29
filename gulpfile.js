@@ -1,10 +1,10 @@
-var gulp         = require('gulp'),
-    sass         = require('gulp-sass'),
-    BrowserSync  = require('browser-sync'),
-    htmlmin      = require('gulp-htmlmin'),
-    csso         = require('gulp-csso'),
-    autoprefixer = require('gulp-autoprefixer'),
-    uglify       = require('gulp-uglify-es').default;
+const gulp         = require('gulp'),
+      sass         = require('gulp-sass'),
+      BrowserSync  = require('browser-sync'),
+      htmlmin      = require('gulp-htmlmin'),
+      csso         = require('gulp-csso'),
+      autoprefixer = require('gulp-autoprefixer'),
+      uglify       = require('gulp-uglify-es').default;
 
 gulp.task('sass', ()=>
      gulp.src('app/sass/**/*.+(sass|scss)')
