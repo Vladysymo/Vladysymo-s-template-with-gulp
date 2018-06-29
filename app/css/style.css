@@ -1,4 +1,4 @@
-/*FONTS.CSS */
+/*FONTS.CSS*/
 @font-face {
   font-family: 'Open Sans';
   src: url(../fonts/OpenSans-Regular.ttf);
@@ -17,7 +17,7 @@
   font-weight: 300;
 }
 
-/*RESET.CSS */
+/*RESET.CSS*/
 * {
   margin: 0;
   padding: 0;
@@ -32,4 +32,9 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   display: block;
 }
 
-/*MAIN.CSS */
+a {
+  text-decoration: none;
+  color: #000;
+}
+
+/*MAIN.CSS*/
