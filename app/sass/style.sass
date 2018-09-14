@@ -2,4 +2,32 @@
 @import fonts
 @import reset
 
-//main styles sass
+//Mixins
+=center($fxd: row)
+    display: flex
+    align-items: center
+    justify-content: center
+    flex-direction: $fxd
+
+=trs($time: .3, $prop: all)
+    transition: #{$prop} #{$time}s 
+
+
+//Main styles
+body
+    +center
+    height: 100vh
+    cursor: pointer
+    +trs
+    h1
+        font-size: 50px
+        font-weight: 300
+        letter-spacing: 7px
+        color: #202124
+        user-select: none
+        +trs
+    &.dark
+        background-color: #202124
+        h1 
+            color: #fff
+
