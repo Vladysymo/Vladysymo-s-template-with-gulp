@@ -13,26 +13,26 @@ const gulp         = require('gulp'),
 
 //SASS and BrowserSync
 gulp.task('sass', ()=>
-	 gulp.src('app/sass/**/*.+(sass|scss)')
+	 gulp.src('src/sass/**/*.+(sass|scss)')
 	.pipe(sass({outputStyle: 'expanded'}).on('error', sass.logError))
-	.pipe(gulp.dest('app/css'))
+	.pipe(gulp.dest('src/css'))
 	.pipe(BrowserSync.reload({stream: true}))
 );
 
 gulp.task('sync', ()=>{
 	BrowserSync({
 		server:{
-			baseDir: 'app'
+			baseDir: 'src'
 		},
 		notify: false
 	});
 });
 
 gulp.task('watch', ['sync', 'sass'], ()=>{
-	gulp.watch('app/sass/**/*.sass', ['sass']);
-	gulp.watch('app/**/*.html', BrowserSync.reload);
-	gulp.watch('app/css/**/*.css', BrowserSync.reload);
-	gulp.watch('app/js/**/*.js', BrowserSync.reload);
+	gulp.watch('src/sass/**/*.sass', ['sass']);
+	gulp.watch('src/**/*.html', BrowserSync.reload);
+	gulp.watch('src/css/**/*.css', BrowserSync.reload);
+	gulp.watch('src/js/**/*.js', BrowserSync.reload);
 });
 
 
@@ -41,17 +41,17 @@ gulp.task('watch', ['sync', 'sass'], ()=>{
 
 //Libraries
 gulp.task('libsjs', ()=>
-	gulp.src('app/libraries/**/*.js')
+	gulp.src('src/libraries/**/*.js')
 	.pipe(concat('lib.js'))
 	.pipe(uglify())
-	.pipe(gulp.dest('app/libs/js'))
+	.pipe(gulp.dest('src/libs/js'))
 );
 
 gulp.task('libscss', ()=>
-	gulp.src('app/libraries/**/*.css')
+	gulp.src('src/libraries/**/*.css')
 	.pipe(concat('lib.css'))
 	.pipe(csso())
-	.pipe(gulp.dest('app/libs/css'))
+	.pipe(gulp.dest('src/libs/css'))
 );
 
 gulp.task('libs', ['libsjs', 'libscss']);
@@ -62,13 +62,13 @@ gulp.task('libs', ['libsjs', 'libscss']);
 
 //Build and optimize
 gulp.task('htmlmin', ()=>
-	 gulp.src('app/**/*.html')
+	 gulp.src('src/**/*.html')
 	.pipe(htmlmin({collapseWhitespace: true}))
 	.pipe(gulp.dest('dist'))
 );
 
 gulp.task('cssmin', ()=>
-	 gulp.src('app/css/**/*.css')
+	 gulp.src('src/css/**/*.css')
 	.pipe(autoprefixer({
 			browsers: ['last 15 versions'],
 			cascade: false
@@ -78,23 +78,23 @@ gulp.task('cssmin', ()=>
 );
 
 gulp.task('jsmin', ()=>
-	 gulp.src('app/js/**/*.js')
+	 gulp.src('src/js/**/*.js')
 	.pipe(uglify())
 	.pipe(gulp.dest('dist/js'))
 );
 
 gulp.task('img', ()=>
-	 gulp.src('app/img/**/*.+(png|jpg|jpeg)')
+	 gulp.src('src/img/**/*.+(png|jpg|jpeg)')
 	.pipe(gulp.dest('dist/img'))
 );
 
 gulp.task('fonts', ()=>
-	 gulp.src('app/fonts/**/*')
+	 gulp.src('src/fonts/**/*')
 	.pipe(gulp.dest('dist/fonts'))
 );
 
 gulp.task('libsdist', ()=>
-	gulp.src('app/libs/**/*.+(css|js)')
+	gulp.src('src/libs/**/*.+(css|js)')
 	.pipe(gulp.dest('dist/libs'))
 );
 
