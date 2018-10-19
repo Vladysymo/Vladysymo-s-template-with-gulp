@@ -70,7 +70,7 @@ gulp.task('htmlmin', ()=>
 gulp.task('cssmin', ()=>
 	 gulp.src('src/css/**/*.css')
 	.pipe(autoprefixer({
-			browsers: ['last 15 versions'],
+			browsers: ['last 0 versions'],
 			cascade: false
 		}))
 	.pipe(csso())
