@@ -5,6 +5,7 @@ const gulp         = require('gulp'),
 	  htmlmin      = require('gulp-htmlmin'),
 	  csso         = require('gulp-csso'),
 	  autoprefixer = require('gulp-autoprefixer'),
+	  imagemin     = require('gulp-imagemin'),
 	  uglify       = require('gulp-uglify-es').default;
 
 
@@ -13,7 +14,7 @@ const gulp         = require('gulp'),
 
 //SASS and BrowserSync
 gulp.task('sass', ()=>
-	 gulp.src('src/sass/**/*.+(sass|scss)')
+	gulp.src('src/sass/**/*.+(sass|scss)')
 	.pipe(sass({outputStyle: 'expanded'}).on('error', sass.logError))
 	.pipe(gulp.dest('src/css'))
 	.pipe(BrowserSync.reload({stream: true}))
@@ -60,15 +61,15 @@ gulp.task('libs', ['libsjs', 'libscss']);
 
 
 
-//Build and optimize
+//Build to production
 gulp.task('htmlmin', ()=>
-	 gulp.src('src/**/*.html')
+	gulp.src('src/**/*.html')
 	.pipe(htmlmin({collapseWhitespace: true}))
 	.pipe(gulp.dest('dist'))
 );
 
 gulp.task('cssmin', ()=>
-	 gulp.src('src/css/**/*.css')
+	gulp.src('src/css/**/*.css')
 	.pipe(autoprefixer({
 			browsers: ['last 0 versions'],
 			cascade: false
@@ -78,31 +79,46 @@ gulp.task('cssmin', ()=>
 );
 
 gulp.task('jsmin', ()=>
-	 gulp.src('src/js/**/*.js')
+	gulp.src('src/js/**/*.js')
 	.pipe(uglify())
 	.pipe(gulp.dest('dist/js'))
 );
 
-gulp.task('img', ()=>
-	 gulp.src('src/img/**/*.+(png|jpg|jpeg)')
+gulp.task('imgmin', ()=>
+	gulp.src('src/img/**/*')
+	 .pipe(imagemin({
+		interlaced: true,
+		progressive: true,
+		optimizationLevel: 5,
+		svgoPlugins: [{removeViewBox: true}]
+	 }))
 	.pipe(gulp.dest('dist/img'))
 );
 
 gulp.task('fonts', ()=>
-	 gulp.src('src/fonts/**/*')
+	gulp.src('src/fonts/**/*')
 	.pipe(gulp.dest('dist/fonts'))
 );
 
-gulp.task('libsdist', ()=>
-	gulp.src('src/libs/**/*.+(css|js)')
-	.pipe(gulp.dest('dist/libs'))
+gulp.task('libsdistjs', ()=>
+	gulp.src('src/libraries/**/*.js')
+	.pipe(concat('lib.js'))
+	.pipe(uglify())
+	.pipe(gulp.dest('dist/libs/js'))
 );
+
+gulp.task('libsdistcss', ()=>
+	gulp.src('src/libraries/**/*.css')
+	.pipe(concat('lib.css'))
+	.pipe(csso())
+	.pipe(gulp.dest('dist/libs/css'))
+)
 
 
 
 
 
 //Gulp commands
-gulp.task('build', ['htmlmin', 'cssmin', 'jsmin', 'img', 'fonts', 'libsdist']);
+gulp.task('build', ['htmlmin', 'cssmin', 'jsmin', 'imgmin', 'fonts', 'libsdistjs', 'libsdistcss']);
 
 gulp.task('default', ['watch']);
